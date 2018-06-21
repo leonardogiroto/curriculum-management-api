@@ -24,6 +24,15 @@ class CurriculumsController < ApplicationController
     @curriculum.score = 1 + (rand * 9)
 
     if @curriculum.save
+
+      params[:formations].each do |formation|
+        formation = Formation.create( formation_params(formation) )
+      end
+
+      params[:professional_experiences].each do |experience|
+        formation = ProfessionalExperience.create( experience_params(experience) )
+      end
+
       render json: @curriculum, status: :created, location: @curriculum
     else
       render json: @curriculum.errors, status: :unprocessable_entity
@@ -42,5 +51,28 @@ class CurriculumsController < ApplicationController
       )
       curr_params[:active] = true
       return curr_params
+    end
+
+    def formation_params(formation)
+      form_params = formation.permit(
+        :institution,
+        :course,
+        :concluded,
+        :start_date,
+        :end_date
+      )
+      form_params[:curriculum_id] = @curriculum.id
+      return form_params
+    end
+
+    def experience_params(experience)
+      exp_params = experience.permit(
+        :company_name,
+        :role,
+        :start_date,
+        :end_date
+      )
+      exp_params[:curriculum_id] = @curriculum.id
+      return exp_params
     end
 end
