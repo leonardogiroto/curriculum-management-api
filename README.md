@@ -1,24 +1,47 @@
-# README
+# Curriculum Management API v1.0
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+API simples para Cadastro e Listagem de Currículos.
 
-Things you may want to cover:
+## Environment
 
-* Ruby version
+Ruby 2.5.1  
+Rails 5.2.0  
+Base de Dados PostgreSQL
 
-* System dependencies
+## Instalação e Configuração
 
-* Configuration
+### Instalando as Gems:  
 
-* Database creation
+```
+bundle install
+```
 
-* Database initialization
+### Criando a Base de Dados
 
-* How to run the test suite
+Configurar em `config/database.yml` usuário e senha local da base de dados.
 
-* Services (job queues, cache servers, search engines, etc.)
+```
+rails db:create
+```
+```
+rails db:migrate
+```
 
-* Deployment instructions
+### Importando o JSON de Dados Inicial
 
-* ...
+```
+rails curriculums:import
+```
+
+## Rodando o Projeto
+
+```
+rails server
+```
+
+## Documentação
+
+| HTTP | Rota | Descrição |
+| ----------- | ---- | --------- |
+| **POST** | /curriculums | Cadastro de currículo. |
+| **GET** | /curriculums | Listagem de currículos ativos ordenados por score. Recebe como parâmetros a página (page) e a quantidade de entradas (per_page). |
